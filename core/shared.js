@@ -4,22 +4,22 @@ function draw(domList, vedioUrl, index) {
     var dldBtn = $('<a>').attr('title', 'Click to Download').attr('style', 'cursor: pointer; margin-left: 7px;').append(dldBtnImg);
 
     var title = $(element).attr('title') || $(element).text();
-
-    dldBtn.click(function () {
+    
+    // dldBtn.click(function() {
         var http = new XMLHttpRequest();
         http.open('HEAD', vedioUrl);
-        http.onreadystatechange = function () {
+        http.onreadystatechange = function() {
             if (this.readyState === this.DONE) {
                 var finalUrl = this.responseURL.slice(0, -1 * '/clipTo/60000/name/a.mp4'.length);
+                console.log("final url", finalUrl);
                 chrome.runtime.sendMessage({
                     vedioUrl: finalUrl,
                     index: index,
                     title: title
-                }, function (response) {
-                });
+                }, function(response) {});
             }
         };
         http.send();
-    });
+    // });
     dldBtn.insertAfter($(element));
 }

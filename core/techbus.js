@@ -1,5 +1,5 @@
 function startTechbus() {
-    setTimeout(function () {
+    setTimeout(function() {
         start({
             drawFunction: draw,
             domList: $('a[data-clip-ref]')
