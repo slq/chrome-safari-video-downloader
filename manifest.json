@@ -1,6 +1,6 @@
 {
-  "name": "Safari Books Online Video Downloader",
-  "description": "If you have Safari Books online(R) subscription, use this extension to save videos to your disk to watch later offline.",
+  "name": "Slawek",
+  "description": "Slawek PL",
   "version": "1.8",
   "permissions": [
     "cookies",
