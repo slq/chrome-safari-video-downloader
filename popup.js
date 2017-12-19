@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    var button = $('button#download')
+    let button = $('button#download')
 
     console.log('Button ' + button.text())
 
@@ -13,17 +13,21 @@ document.addEventListener('DOMContentLoaded', () => {
             let div = $('<div>').attr('style', 'padding: 5px; border-top: 1px solid black;').text(title)
 
             if (video.isVideo) {
-                div.css('cursor', 'pointer')
+                div.addClass('video')
                 div.click(function () {
                     download(items.wid, items.uiconfId, title, video.referenceId)
                 })
                 index = index + 1
             } else {
-                div.css('font-size', '11pt').css('color', 'white').css('background-color', 'firebrick').css('margin-top', '10px')
+               div.addClass('chapter')
                 div.prop('disabled', true);
             }
 
             $('div#titles').append(div)
+        })
+
+        button.click(function () {
+            $('div.video').click()
         })
     })
 });
