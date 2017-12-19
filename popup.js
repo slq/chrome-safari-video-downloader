@@ -6,14 +6,22 @@ document.addEventListener('DOMContentLoaded', () => {
     chrome.storage.local.get(null, (items) => {
         console.log('Loaded items', items)
 
-        items.titles.forEach((title, index) => {
+        let index = 0
+        items.videos.forEach((video) => {
+            let title = parseTitle(video, index)
 
-            let div = $('<div>').attr('style', 'padding: 5px; cursor: pointer; border-bottom: 1px solid black;').text(title)
-            div.click(function () {
-                console.log('Downloading video: ', title)
+            let div = $('<div>').attr('style', 'padding: 5px; border-top: 1px solid black;').text(title)
 
-                download(items.wid, items.uiconfId, title, items.referenceIds[index])
-            })
+            if (video.isVideo) {
+                div.css('cursor', 'pointer')
+                div.click(function () {
+                    download(items.wid, items.uiconfId, title, video.referenceId)
+                })
+                index = index + 1
+            } else {
+                div.css('font-size', '11pt').css('color', 'white').css('background-color', 'firebrick').css('margin-top', '10px')
+                div.prop('disabled', true);
+            }
 
             $('div#titles').append(div)
         })
@@ -40,3 +48,18 @@ function draw(title, url) {
     }, function (response) {
     });
 }
+
+function parseTitle(video, index) {
+    if (!video.isVideo) {
+        return video.title
+    }
+
+    return leftPad(index + 1) + ' - ' + video.title.replace(/\W+/g, " ") + '.mp4'
+}
+
+function leftPad(num) {
+    var str = num + "";
+    var pad = "000";
+    return pad.substring(0, pad.length - str.length) + str;
+}
+

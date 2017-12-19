@@ -1,10 +1,3 @@
-function leftPad(num) {
-    var str = num + "";
-    var pad = "000";
-    return pad.substring(0, pad.length - str.length) + str;
-}
-
-
 function start() {
     // var jsSrc = $('#metadata_flashactive > div > div.sdwBoxContent > div.brightcove_video > script', html).attr('src');
 
@@ -25,23 +18,20 @@ function start() {
         }
 
     }
+
     var json = JSON.parse(apiSettings.substring(24, apiSettings.length - 4))
-    let refs = json.refwork_response.refids;
 
-
-    apiParams.refList = refs.map(function (ref) {
-        return ref.linkid;
-    });
-
-    let titles = []
-    refs.forEach((value, index) => titles.push(leftPad(index + 1) + ' - ' + value.title.replace(/\W+/g, " ") + '.mp4'))
-
-    console.log('titles', titles)
+    let videos = json.refwork_response.refids.map((ref) => {
+        return {
+            referenceId: ref.linkid,
+            title: ref.title,
+            isVideo: ref.duration > 0
+        }
+    })
 
     chrome.storage.local.set({
         wid: apiParams.wid,
         uiconfId: apiParams.uiconfId,
-        referenceIds: apiParams.refList,
-        titles: titles,
+        videos: videos
     })
 }
