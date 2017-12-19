@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (video.isVideo) {
                 div.addClass('video')
                 div.click(function () {
-                    download(items.wid, items.uiconfId, title, video.referenceId)
+                    downloadPlayerConfig(items.wid, items.uiconfId, title, video.referenceId)
                 })
                 index = index + 1
             } else {
@@ -32,23 +32,22 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 });
 
-function download(wid, uiconfId, title, referenceId) {
-    var url = 'http://cdnapi.kaltura.com/html5/html5lib/v2.50/mwEmbedFrame.php?&wid=_' + wid +
-        '&uiconf_id=' + uiconfId + '&flashvars[referenceId]=' + referenceId + '&callback=o';
+function downloadPlayerConfig(wid, uiconfId, title, referenceId) {
+    const url = `http://cdnapi.kaltura.com/html5/html5lib/v2.50/mwEmbedFrame.php?&wid=_${wid}&uiconf_id=${uiconfId}&flashvars[referenceId]=${referenceId}&callback=o`;
 
     $.get(url).always(function (o) {
-        var frm = o.indexOf('downloadUrl') + 'downloadUrl'.length + 5;
-        var to = o.indexOf('",', frm);
-        var finalUrl = o.substring(frm, to).split('\\').join('');
+        let frm = o.indexOf('downloadUrl') + 'downloadUrl'.length + 5;
+        let to = o.indexOf('",', frm);
+        let finalUrl = o.substring(frm, to).split('\\').join('');
 
         console.log(title, finalUrl)
 
-        draw(title, finalUrl);
+        downloadVideo(title, finalUrl);
     });
 }
 
-function draw(title, url) {
-    var http = new XMLHttpRequest();
+function downloadVideo(title, url) {
+    let http = new XMLHttpRequest();
     http.open('HEAD', url);
     http.onreadystatechange = function() {
         if (this.readyState === this.DONE) {
@@ -57,7 +56,7 @@ function draw(title, url) {
 
             // finalUrl
             // http://cdnbakmi.kaltura.com/p/1926081/sp/192608100/serveFlavor/entryId/0_tk80t49k/v/2/flavorId/0_82qewob9/fileName/The_Case_for_Kafka_(Source).mp4/
-            var finalUrl = this.responseURL.slice(0, -1 * '/clipTo/60000/name/a.mp4'.length);
+            let finalUrl = this.responseURL.slice(0, -1 * '/clipTo/60000/name/a.mp4'.length);
 
             chrome.runtime.sendMessage({
                 url: finalUrl,
@@ -78,8 +77,8 @@ function parseTitle(video, index) {
 }
 
 function leftPad(num) {
-    var str = num + "";
-    var pad = "000";
+    let str = num + "";
+    let pad = "000";
     return pad.substring(0, pad.length - str.length) + str;
 }
 

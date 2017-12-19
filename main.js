@@ -1,7 +1,7 @@
 (function () {
     if(/.*learning-paths.*/.test(document.location.href)) {
-        start();
+        parseLearningPath();
     } else {
-        video()
+        parseVideoTutorial()
     }
 })();

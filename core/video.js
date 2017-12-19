@@ -1,4 +1,4 @@
-function video() {
+function parseVideoTutorial() {
     var jsSrc = 'https://cdnapisec.kaltura.com/p/1926081/sp/192608100/embedIframeJs/uiconf_id/29375172/partner_id/1926081';
 
     var a = jsSrc.match(/\d+/g);
