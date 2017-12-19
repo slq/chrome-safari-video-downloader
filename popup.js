@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 index = index + 1
             } else {
-               div.addClass('chapter')
+                div.addClass('chapter')
                 div.prop('disabled', true);
             }
 
@@ -37,9 +37,9 @@ function download(wid, uiconfId, title, referenceId) {
         '&uiconf_id=' + uiconfId + '&flashvars[referenceId]=' + referenceId + '&callback=o';
 
     $.get(url).always(function (o) {
-        var frm = o.responseText.indexOf('downloadUrl') + 'downloadUrl'.length + 5;
-        var to = o.responseText.indexOf('",', frm);
-        var finalUrl = o.responseText.substring(frm, to).split('\\').join('');
+        var frm = o.indexOf('downloadUrl') + 'downloadUrl'.length + 5;
+        var to = o.indexOf('",', frm);
+        var finalUrl = o.substring(frm, to).split('\\').join('');
 
         draw(title, finalUrl);
     });

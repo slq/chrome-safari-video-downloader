@@ -20,6 +20,7 @@
       "js": [
         "lib/jquery.min.js",
         "core/util.js",
+        "core/video.js",
         "main.js"
       ],
       "run_at": "document_idle"
