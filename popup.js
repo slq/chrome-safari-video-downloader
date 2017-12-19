@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         items.titles.forEach((title, index) => {
 
-            let div = $('<div>').attr('style', 'margin: 5px;').text(title)
+            let div = $('<div>').attr('style', 'padding: 5px; cursor: pointer; border-bottom: 1px solid black;').text(title)
             div.click(function () {
                 console.log('Downloading video: ', title)
 
@@ -37,5 +37,6 @@ function draw(title, url) {
     chrome.runtime.sendMessage({
         url: url,
         title: title
-    }, function(response) {});
+    }, function (response) {
+    });
 }

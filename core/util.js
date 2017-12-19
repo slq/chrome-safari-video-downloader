@@ -5,7 +5,7 @@ function leftPad(num) {
 }
 
 
-function start(drawParams, html) {
+function start() {
     // var jsSrc = $('#metadata_flashactive > div > div.sdwBoxContent > div.brightcove_video > script', html).attr('src');
 
     var jsSrc = 'https://cdnapisec.kaltura.com/p/1926081/sp/192608100/embedIframeJs/uiconf_id/29375172/partner_id/1926081';
@@ -33,8 +33,6 @@ function start(drawParams, html) {
         return ref.linkid;
     });
 
-    drawParams.domList = refs;
-
     let titles = []
     refs.forEach((value, index) => titles.push(leftPad(index + 1) + ' - ' + value.title.replace(/\W+/g, " ") + '.mp4'))
 
@@ -46,3 +44,4 @@ function start(drawParams, html) {
         referenceIds: apiParams.refList,
         titles: titles,
     })
+}

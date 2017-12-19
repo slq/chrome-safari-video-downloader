@@ -1,59 +1,36 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
-  <head>
-    <title>Getting Started Extension's Popup</title>
-    <style type="text/css">
-      body {
-        margin: 10px;
-        white-space: nowrap;
-      }
-
-      h1 {
-        font-size: 15px;
-      }
-
-      #container {
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      #titles {
-        margin: 5px;
-      }
-    </style>
-
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-    -->
+<head>
+    <title>Safari Video Downloader Chrome Extension</title>
     <script src="popup.js"></script>
     <script src="lib/jquery.min.js"></script>
-  </head>
+    <style type="text/css">
+        body {
+            margin: 10px;
+            white-space: nowrap;
+        }
 
-  <body>
-    <h1>Background Color Changer</h1>
-    <div id="container">
-      <span>Choose a color</span>
-      <select id="dropdown">
-        <option selected disabled hidden value=''></option>
-        <option value="white">White</option>
-        <option value="pink">Pink</option>
-        <option value="green">Green</option>
-        <option value="yellow">Yellow</option>
-      </select>
+        h1 {
+            font-size: 15px;
+        }
 
-      <button id="download">Download...</button>
+        #container {
+            align-items: center;
+            justify-content: space-between;
+        }
 
-      <div id="titles">
+        #titles {
+            margin: 5px;
+        }
+    </style>
+</head>
 
-      </div>
+<body>
+<h1>Safari Video Downloader</h1>
+<div id="container">
+    <button id="download">Download all</button>
+    <div id="titles">
     </div>
-  </body>
+</div>
+</body>
 </html>
