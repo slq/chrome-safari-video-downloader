@@ -41,16 +41,32 @@ function download(wid, uiconfId, title, referenceId) {
         var to = o.indexOf('",', frm);
         var finalUrl = o.substring(frm, to).split('\\').join('');
 
+        console.log(title, finalUrl)
+
         draw(title, finalUrl);
     });
 }
 
 function draw(title, url) {
-    chrome.runtime.sendMessage({
-        url: url,
-        title: title
-    }, function (response) {
-    });
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url);
+    http.onreadystatechange = function() {
+        if (this.readyState === this.DONE) {
+            // this.responseURL
+            // http://cdnbakmi.kaltura.com/p/1926081/sp/192608100/serveFlavor/entryId/0_tk80t49k/v/2/flavorId/0_82qewob9/fileName/The_Case_for_Kafka_(Source).mp4/clipTo/180000/name/a.mp4
+
+            // finalUrl
+            // http://cdnbakmi.kaltura.com/p/1926081/sp/192608100/serveFlavor/entryId/0_tk80t49k/v/2/flavorId/0_82qewob9/fileName/The_Case_for_Kafka_(Source).mp4/
+            var finalUrl = this.responseURL.slice(0, -1 * '/clipTo/60000/name/a.mp4'.length);
+
+            chrome.runtime.sendMessage({
+                url: finalUrl,
+                title: title
+            }, function (response) {
+            });
+        }
+    };
+    http.send()
 }
 
 function parseTitle(video, index) {
