@@ -1,20 +1,9 @@
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    var filename = leftPad(message.index + 1) + ' - ' + message.title.replace(/\W+/g, " ") + '.mp4';
-    console.log('Downloading', filename, 'from', message.vedioUrl)
-
-    // if(message.index > 10) {
-    //     return;
-    // }
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log('Downloading', message.title, 'from', message.url)
 
     chrome.downloads.download({
-        url: message.vedioUrl,
-        filename: filename,
+        url: message.url,
+        filename: message.title,
         saveAs: false
     });
 });
-
-function leftPad(num) {
-    var str = num + "";
-    var pad = "000";
-    return pad.substring(0, pad.length - str.length) + str;
-}

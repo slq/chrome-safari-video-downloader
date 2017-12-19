@@ -5,8 +5,13 @@
   "permissions": [
     "cookies",
     "downloads",
+    "storage",
     "*://*.safaribooksonline.com/"
   ],
+  "browser_action": {
+    "default_icon": "icon/48.png",
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
       "matches": [
