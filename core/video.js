@@ -1,21 +1,40 @@
 function parseVideoTutorial() {
-    var jsSrc = 'https://cdnapisec.kaltura.com/p/1926081/sp/192608100/embedIframeJs/uiconf_id/29375172/partner_id/1926081';
+    let jsSrc = 'https://cdnapisec.kaltura.com/p/1926081/sp/192608100/embedIframeJs/uiconf_id/29375172/partner_id/1926081';
 
-    var a = jsSrc.match(/\d+/g);
-    var apiParams = {
+    let a = jsSrc.match(/\d+/g);
+    let apiParams = {
         wid: a[0],
         uiconfId: a[2],
         refList: []
     };
 
-    let dataUrls = $('ol').find('li').map(function () {
-        return $(this).attr('data-api-url')
+    let dataUrls = []
+    $('li.toc-level-1').each(function () {
+        if($(this).find('li').length === 0) {
+            dataUrls.push({
+                dataUrl: $(this).attr('data-api-url'),
+                isVideo: true
+            })
+        } else {
+            dataUrls.push({
+                dataUrl: $(this).attr('data-api-url'),
+                isVideo: false
+            })
+
+            $(this).find('li').each(function () {
+                dataUrls.push({
+                    dataUrl: $(this).attr('data-api-url'),
+                    isVideo: true
+                })
+            })
+        }
     })
+
     console.log('Attrs', dataUrls)
 
     let promises = []
     for (let i = 0; i < dataUrls.length; i++) {
-        promises.push($.get(dataUrls[i]));
+        promises.push($.get(dataUrls[i].dataUrl));
     }
 
     let videos = []
@@ -30,7 +49,7 @@ function parseVideoTutorial() {
             videos.push({
                 referenceId: json.videoclips[0].reference_id,
                 title: json.title,
-                isVideo: true
+                isVideo: dataUrls[i].isVideo
             })
         }
 
@@ -42,4 +61,8 @@ function parseVideoTutorial() {
             videos: videos
         })
     });
+}
+
+function isLevelTwoTutorial() {
+    return $('li.toc-level-2').length > 0
 }
